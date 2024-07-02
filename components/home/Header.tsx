@@ -1,5 +1,3 @@
-import NextLogo from "./NextLogo";
-import SupabaseLogo from "./SupabaseLogo";
 import AuthButton from "./AuthButton";
 import LogoButton from "./LogoButton";
 
