@@ -39,7 +39,7 @@ export default function createShortLinkPage({
             <Input id="link" placeholder="Enter your original link" onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setOriginalLink(e.target.value) }}/>
 
             <div className="flex items-center gap-2">
-                <Card className="p-2">linkhub.com</Card> /
+                <Card className="p-2 w-1/5">linkhub-amber.vercel.app</Card> /
                 <Label htmlFor="custom_url" className="sr-only">Custom URL (optional)</Label>
                 <Input id="custom_url" placeholder="Enter your Custom URL (optional)" onChange={(e: React.ChangeEvent<HTMLInputElement>)=>{setCustomUrl(e.target.value)}}/>
 

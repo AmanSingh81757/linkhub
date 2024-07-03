@@ -21,7 +21,7 @@ export async function createShortLink(user_id: string, title: string, original_l
     if(custom_url === ''){
         custom_url = randomString;
     }
-    const shortened_link = `linkhub.com/${custom_url}`;
+    const shortened_link = `linkhub-amber.vercel.app/${custom_url}`;
     const supabase = createClient();
     const { data, error } = await supabase
         .from('shortenedlinks')
