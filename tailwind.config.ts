@@ -17,6 +17,12 @@ const config = {
         "2xl": "1400px",
       },
     },
+    fontFamily: {
+      primary: "--font-geistsans",
+      "barlow-condensed": "var(--font-barlow-condensed)",
+      "inconsolata": "var(--font-inconsolata)",
+      "roboto-slab": "var(--font-roboto-slab)",
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",

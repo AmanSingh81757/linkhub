@@ -28,12 +28,12 @@ export default function SideLinks() {
             key={link.name}
             href={link.href}
             className={clsx(
-              'flex h-[48px] grow items-center justify-center gap-2 rounded-md p-3 text-sm font-medium hover:bg-green-200 hover:text-green-600 md:flex-none md:justify-start md:p-2 md:px-3',
+              'flex h-[48px] grow items-center justify-center gap-2 rounded-md p-3  text-primary font-medium hover:bg-[#8DECB4] hover:text-[#41B06E] md:flex-none md:justify-start md:p-2 md:px-3',
               {
-                'bg-green-200 text-green-600': pathname === link.href,
+                'bg-[#8DECB4]': pathname === link.href,
               },
               {
-                'bg-green-700': pathname !== link.href,
+                'bg-[#41B06E]': pathname !== link.href,
               }
             )}
             >

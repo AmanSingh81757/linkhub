@@ -1,7 +1,8 @@
 import { createClient } from "@/utils/supabase/server";
+import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
 import Link from "next/link";
 import { redirect } from "next/navigation";
-
+import { Button } from "../ui/button";
 export default async function AuthButton() {
   const supabase = createClient();
 
@@ -20,20 +21,21 @@ export default async function AuthButton() {
   return user ? (
     <div className="flex items-center gap-4">
       <a href="/dashboard">
-      <button className="flex-row flex py-2 px-4 rounded-md no-underline bg-white hover:bg-slate-200 text-black">Go to Dashboard
-      <svg width="20px" height="20px" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg" aria-labelledby="arrowRightTopIconTitle" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" color="#000000"> <title id="arrowRightTopIconTitle">Arrow Right Top</title> <path d="M19 13V5h-8"/> <path stroke-linecap="round" d="M19 5l-1 1"/> <path d="M18 6L5 19"/> </svg>
-      </button>
+      <Button variant="default" className="flex items-center">
+      <span className="hidden md:block">Go to Dashboard</span>{' '}<ArrowUpRightIcon className="h-5 w-5 ml-2" />
+      </Button>
+
       </a>
       <form action={signOut}>
-        <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover text-base">
+        <Button variant="outline" className="py-2 px-4 rounded-md no-underline text-base">
           Logout
-        </button>
+        </Button>
       </form>
     </div>
   ) : (
     <Link
       href="/login"
-      className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover text-base"
+      className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover border border-secondary text-base"
     >
       Login / Sign Up
     </Link>

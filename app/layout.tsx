@@ -1,5 +1,22 @@
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
+import { Barlow_Condensed, Inconsolata, Roboto_Slab } from 'next/font/google';
+
+const barlowCondensed = Barlow_Condensed({
+  weight: '700',
+  subsets: ['latin'],
+  variable: '--font-barlow-condensed',
+});
+const inconsolata = Inconsolata({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-inconsolata',
+});
+const robotoSlab = Roboto_Slab({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-roboto-slab',
+});
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -17,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={GeistSans.className}>
+    <html lang="en" className={`${GeistSans.className} ${barlowCondensed.variable} ${inconsolata.variable} ${robotoSlab.variable}`}>
       <body className="bg-background text-foreground">
         <main className="min-h-screen flex flex-col items-center">
           {children}

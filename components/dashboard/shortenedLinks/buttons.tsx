@@ -1,5 +1,5 @@
 "use client"
-import { PencilIcon, PlusIcon, TrashIcon, ShareIcon } from '@heroicons/react/24/outline';
+import {  PlusIcon, TrashIcon, ShareIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { useState } from 'react';
 import copy from 'clipboard-copy';
@@ -24,12 +24,11 @@ import { deleteShortLink, createShortLink, revalidateGivenPath } from '@/app/lib
 
 export function AddShortLink() {
   return (
-    <Link
-      href="/dashboard/shortlinks/create"
-      className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-black transition-colors hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-    >
+    <Link href="/dashboard/shortlinks/create">
+      <Button variant="default" className="flex items-center">
       <span className="hidden md:block">Add</span>{' '}
-      <PlusIcon className="h-5 md:ml-4 text-black" />
+      <PlusIcon className="h-5 md:ml-4 text-secondary" />
+      </Button>
     </Link>
   );
 }
@@ -57,7 +56,7 @@ export function DeleteShortLink({ id }: { id: Number }) {
       deleteShortLink(id);
       revalidateGivenPath('/dashboard/shortlinks');
       }}>
-      <button className="rounded-md border p-2 bg-red-600 hover:bg-red-500" >
+      <button className="rounded-md border p-2 bg-destructive hover:bg-red-500" >
         <span className="sr-only">Delete</span>
         <TrashIcon className="w-5 text-white" />
       </button>
@@ -79,8 +78,8 @@ export function ShareShortLink({ id, shortened_link }: { id: Number, shortened_l
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">
-        <span className="sr-only rounded-md border p-2 bg-green-600 hover:bg-green-500">Share</span>
+        <Button variant="default">
+        <span className="sr-only rounded-md border p-2">Share</span>
         <ShareIcon className="w-5 text-white" />
         </Button>
       </DialogTrigger>
@@ -100,6 +99,7 @@ export function ShareShortLink({ id, shortened_link }: { id: Number, shortened_l
               id="link"
               defaultValue={shortened_link}
               readOnly
+              className='font-inconsolata'
             />
           </div>
           <Button type="submit" size="sm" className="px-3" onClick={handleCopyClick}>
@@ -109,7 +109,7 @@ export function ShareShortLink({ id, shortened_link }: { id: Number, shortened_l
         </div>
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
-            <Button type="button" variant="secondary">
+            <Button type="button" variant="outline">
               Close
             </Button>
           </DialogClose>

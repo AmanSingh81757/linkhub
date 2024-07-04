@@ -18,7 +18,7 @@ export default async function DashboardPage() {
   return (
     <main className="flex-1 w-full flex flex-col gap-20 items-center">
         <div className="flex flex-row justify-between w-full">
-          <h1 className="text-4xl font-bold">Your shortened Links will show here</h1>
+          <h1 className="text-4xl font-bold font-roboto-slab">Your shortened Links will show here</h1>
           <AddShortLink />
         </div>
         <Suspense fallback={<p className="text-3xl font-extrabold flex justify-start">Loading feed...</p>}>
