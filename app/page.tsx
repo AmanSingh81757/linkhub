@@ -1,9 +1,8 @@
 import AuthButton from "../components/home/AuthButton";
 import { createClient } from "@/utils/supabase/server";
-import ConnectSupabaseSteps from "@/components/tutorial/ConnectSupabaseSteps";
-import SignUpUserSteps from "@/components/tutorial/SignUpUserSteps";
 import Header from "@/components/home/Header";
-import LogoButton from "../components/home/LogoButton";
+import Hero from "@/components/home/Hero";
+import { Tools } from "@/components/home/Tools";
 
 export default async function Index() {
   const canInitSupabaseClient = () => {
@@ -20,9 +19,10 @@ export default async function Index() {
   const isSupabaseConnected = canInitSupabaseClient();
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-20 items-center">
+    <div className="flex-1 w-full flex flex-col gap-10 items-center">
       <Header />
-
+      <Hero />
+      <Tools />
       <footer className="w-full border-t border-t-foreground/10 p-8 flex justify-center text-center text-xs">
         <p>
           Made using{" "}

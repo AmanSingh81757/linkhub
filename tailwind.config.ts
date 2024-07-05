@@ -22,6 +22,8 @@ const config = {
       "barlow-condensed": "var(--font-barlow-condensed)",
       "inconsolata": "var(--font-inconsolata)",
       "roboto-slab": "var(--font-roboto-slab)",
+      "lexend": "var(--font-lexend)",
+      "bodoni-moda": "var(--font-bodoni-moda)",
     },
     extend: {
       colors: {

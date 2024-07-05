@@ -1,6 +1,6 @@
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
-import { Barlow_Condensed, Inconsolata, Roboto_Slab } from 'next/font/google';
+import { Barlow_Condensed, Inconsolata, Roboto_Slab, Lexend, Bodoni_Moda } from 'next/font/google';
 
 const barlowCondensed = Barlow_Condensed({
   weight: '700',
@@ -17,7 +17,16 @@ const robotoSlab = Roboto_Slab({
   subsets: ['latin'],
   variable: '--font-roboto-slab',
 });
-
+const lexend = Lexend({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-lexend',
+});
+const bodoniModa = Bodoni_Moda({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-bodoni-moda',
+});
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";
@@ -34,9 +43,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${GeistSans.className} ${barlowCondensed.variable} ${inconsolata.variable} ${robotoSlab.variable}`}>
+    <html lang="en" className={`${bodoniModa} ${GeistSans.className} ${barlowCondensed.variable} ${inconsolata.variable} ${robotoSlab.variable} ${lexend.variable}`}>
       <body className="bg-background text-foreground">
-        <main className="min-h-screen flex flex-col items-center">
+        <main className="min-h-screen flex flex-col items-center font-lexend">
           {children}
         </main>
       </body>
