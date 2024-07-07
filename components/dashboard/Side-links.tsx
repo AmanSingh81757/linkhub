@@ -11,16 +11,16 @@ const links = [
     // { name: 'Home', href: '/dashboard', icon: HomeIcon },
     // { name: 'Invoices', href: '/dashboard/invoices', icon: DocumentDuplicateIcon,},
     // { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
-
-    { name: 'Shortened Links', href: '/dashboard/shortlinks' },
+    { name: 'Overview', href: '/dashboard' },
+    { name: 'Short Links', href: '/dashboard/shortlinks' },
     { name: 'Link Trees', href: '/dashboard/linktrees'},
-    { name: 'Generated QRs', href: '/dashboard/qrcodes'},
+    { name: 'QR Codes', href: '/dashboard/qrcodes'},
 ];
 
 export default function SideLinks() {
   const pathname = usePathname();
   return (
-    <>
+    <div className="flex grow items-center px-1 sm:px-2 md:px-5 py-1 sm:gap-2 md:gap-5 flex-row justify-start bg-muted rounded-xl">
       {links.map((link) => {
         // const LinkIcon = link.icon;
         return (
@@ -28,12 +28,12 @@ export default function SideLinks() {
             key={link.name}
             href={link.href}
             className={clsx(
-              'flex h-[48px] grow items-center justify-center gap-2 rounded-md p-3 text-primary font-medium hover:bg-[#8DECB4] hover:text-[#41B06E] md:flex-none md:justify-start md:p-2 md:px-3',
+              'h-full flex py-3 md:px-3 rounded-[0.5rem] grow items-center text-xs md:text-base justify-center text-muted-foreground font-medium hover:bg-card hover:text-primary md:flex-none md:justify-start',
               {
-                'bg-[#8DECB4]': pathname === link.href,
+                'text-primary bg-card': pathname === link.href,
               },
               {
-                'bg-[#41B06E]': pathname !== link.href,
+                'bg-muted': pathname !== link.href,
               }
             )}
             >
@@ -42,6 +42,6 @@ export default function SideLinks() {
           </Link>
         );
       })}
-    </>
+    </div>
   );
 }

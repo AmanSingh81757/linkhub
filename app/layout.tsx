@@ -1,6 +1,7 @@
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { Barlow_Condensed, Inconsolata, Roboto_Slab, Lexend, Bodoni_Moda } from 'next/font/google';
+import { ThemeProvider } from "@/components/theme-provider";
 
 const barlowCondensed = Barlow_Condensed({
   weight: '700',
@@ -22,11 +23,6 @@ const lexend = Lexend({
   subsets: ['latin'],
   variable: '--font-lexend',
 });
-const bodoniModa = Bodoni_Moda({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-bodoni-moda',
-});
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";
@@ -43,10 +39,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${bodoniModa} ${GeistSans.className} ${barlowCondensed.variable} ${inconsolata.variable} ${robotoSlab.variable} ${lexend.variable}`}>
+    <html lang="en" className={`${GeistSans.className} ${barlowCondensed.variable} ${inconsolata.variable} ${robotoSlab.variable} ${lexend.variable}`}>
       <body className="bg-background text-foreground">
         <main className="min-h-screen flex flex-col items-center font-lexend">
-          {children}
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
         </main>
       </body>
     </html>

@@ -5,49 +5,68 @@ import Link from "next/link";
 import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
 import { SetStateAction, useEffect, useState } from "react";
 import { User } from "@supabase/supabase-js";
+import { revalidatePath } from "next/cache";
 
 export default function AuthButton() {
-    const supabase = createClient();
-    const [user, setUser] = useState<User|undefined>(undefined);
+const supabase = createClient();
+const [user, setUser] = useState<User|null>(null);
+const [signed_in, setSignedIn] = useState<boolean>(false);
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            const { data, error} = await supabase.auth.getSession();
-            const user = data?.session?.user
-            setUser(user);
-            console.log(user);
-        }
-    }, []);
+useEffect(() => {
+    const fetchUser = async () => {
+        const { data, error} = await supabase.auth.getSession();
+        const user = data?.session?.user
+        setUser(user?user:null);
+        console.log(user);
+    }
+    fetchUser();
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+        setUser(session?session.user:null);
+        setSignedIn(true);
+      }
+      else if (event === 'SIGNED_OUT') {
+        setUser(null);
+        setSignedIn(false);
+      }
+    });
+}, [signed_in]);
 
-    const signOut = async () => {
+const signOut = async () => {
 
-      const supabase = createClient();
-      await supabase.auth.signOut();
-      return redirect("/login");
-    };
+  const supabase = createClient();
+  try{
+    const {error} = await supabase.auth.signOut();
+    if (error) {
+      console.error("Error logging out:", error.message);
+      return;
+    }
+    // setUser(null);
+    setSignedIn(false);
+      console.log("Logged out successfully");
+  } catch (error) {
+      console.error("Error logging out:", error);
+    }
+};
 
-    return user ? (
-      <div className="flex items-center gap-4">
-        <a href="/dashboard">
-        <Button variant="default" className="flex items-center">
-        <span className="hidden md:block">Go to Dashboard</span>{' '}<ArrowUpRightIcon className="h-5 w-5 ml-2" />
-        </Button>
-
-        </a>
-        <form action={signOut}>
-          <Button variant="outline" className="py-2 px-4 rounded-md no-underline text-base">
-            Logout
-          </Button>
-        </form>
-      </div>
-    ) : (
-      <Link
-        href="/login"
-        className="py-2 px-3 absolute left-64 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover border border-secondary text-base"
-      >
-        <Button variant="outline">
-            Login
-        </Button>
-      </Link>
-    );
-  }
+return user ? (
+<form action={async ()=>{
+  await signOut();
+  redirect("/login");
+}} className="px-3 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover text-base"
+>
+  <Button variant="outline">
+    Logout
+  </Button>
+</form>
+) : (
+  <Link
+    href="/login"
+    className="px-3 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover border border-secondary text-base"
+  >
+    <Button variant="outline">
+        Login
+    </Button>
+  </Link>
+  );
+}

@@ -4,6 +4,7 @@ import LogoButton from "./LogoButton";
 import MobileMenuButton from "./MobileMenuButton";
 import MobileDrawer from "./MobileDrawer";
 import { useState } from "react";
+import { DarkModeToggle } from "../ui/dark-mode-button";
 
 const MobileNav = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -19,10 +20,16 @@ const MobileNav = () => {
         //   <AuthButton />
         // </div>
         <div className="md:hidden flex w-full ">
-            <div className="md:hidden relative flex flex-row px-auto justify-between">
-                <MobileMenuButton onClick={handleDrawerToggle} />
-                <LogoButton />
-                <AuthButton />
+            <div className="md:hidden w-full relative flex flex-row px-auto justify-between px-2">
+                <div className="flex flex-row">
+                    <MobileMenuButton onClick={handleDrawerToggle} />
+                    <LogoButton />
+                </div>
+                <div className="flex flex-row pt-2">
+                    <AuthButton />
+                    {/* {children} */}
+                    <DarkModeToggle />
+                </div>
             </div>
             <MobileDrawer isOpen={isDrawerOpen} onClose={handleDrawerToggle}/>
         </div>

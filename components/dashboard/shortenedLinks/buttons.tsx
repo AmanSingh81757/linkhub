@@ -19,14 +19,14 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Copy, Router } from "lucide-react"
+import { Copy } from "lucide-react"
 import { deleteShortLink, createShortLink, revalidateGivenPath } from '@/app/lib/short-link';
 
 export function AddShortLink() {
   return (
-    <Link href="/dashboard/shortlinks/create">
-      <Button variant="default" className="flex items-center">
-      <span className="hidden md:block">Add</span>{' '}
+    <Link href="/dashboard/shortlinks/create" >
+      <Button variant="default" className="flex items-center w-full">
+      <span className="block">Add</span>{' '}
       <PlusIcon className="h-5 md:ml-4 text-secondary" />
       </Button>
     </Link>
@@ -56,10 +56,10 @@ export function DeleteShortLink({ id }: { id: Number }) {
       deleteShortLink(id);
       revalidateGivenPath('/dashboard/shortlinks');
       }}>
-      <button className="rounded-md border p-2 bg-destructive hover:bg-red-500" >
+      <Button variant={"destructive"} size={"sm"}>
         <span className="sr-only">Delete</span>
-        <TrashIcon className="w-5 text-white" />
-      </button>
+        <TrashIcon className="w-5 text-foreground" />
+      </Button>
     </form>
   );
 }
@@ -78,9 +78,9 @@ export function ShareShortLink({ id, shortened_link }: { id: Number, shortened_l
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="default">
-        <span className="sr-only rounded-md border p-2">Share</span>
-        <ShareIcon className="w-5 text-white" />
+        <Button variant="secondary" size={"sm"}>
+          <span className="sr-only rounded-md border p-1">Share</span>
+          <ShareIcon className="w-5" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
