@@ -18,7 +18,7 @@ export default async function Hero() {
         </div>
         <div>
             <Link href="/dashboard">
-                <Button >Get Started</Button>
+                <Button>Get Started</Button>
             </Link>
         </div>
     </div>

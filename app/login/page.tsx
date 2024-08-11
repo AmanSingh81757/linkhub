@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { SubmitButton } from "./submit-button";
+import { Button } from "@/components/ui/button";
 
 export default function Login({
   searchParams,
@@ -74,7 +75,7 @@ export default function Login({
         Back
       </Link>
 
-      <form className="flex flex-col w-full justify-center my-auto gap-2 p-5 rounded-md text-foreground shadow-2xl bg-[#fff1d4]">
+      <form className="flex flex-col w-full justify-center my-auto gap-2 p-5 rounded-md text-foreground shadow-2xl bg-card">
         <label className="text-md" htmlFor="email">
           Email
         </label>
@@ -96,10 +97,10 @@ export default function Login({
         />
         <SubmitButton
           formAction={signIn}
-          className="bg-green-700 hover:bg-green-800 rounded-md px-4 py-2 text-foreground mb-2"
+          className="bg-btn-background hover:bg-btn-background-hover py-2 text-foreground mb-2"
           pendingText="Signing In..."
         >
-          Sign In
+          <Button className="w-full rounded-none">Sign In</Button>
         </SubmitButton>
         <SubmitButton
           formAction={signUp}
