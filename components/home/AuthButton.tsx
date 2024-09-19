@@ -38,7 +38,7 @@ export default async function AuthButton() {
       className="py-2 px-3 flex no-underline bg-btn-background hover:bg-btn-background-hover text-base"
     >
      <Button className="py-2 px-4 no-underline text-base">
-            <span className="hidden lg:block">Login /Signup</span>
+            <span className="hidden lg:block">Login</span>
             <span className="lg:hidden">Login</span>
       </Button>
     </Link>
