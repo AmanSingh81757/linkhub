@@ -2,8 +2,6 @@
 import QRCode from 'qrcode'
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card } from "@/components/ui/card"
-import { CreateShortLink } from "@/components/dashboard/shortenedLinks/buttons"
 import { useState, useEffect } from "react"
 import { createClient } from "@/utils/supabase/client"
 import { UserResponse } from "@supabase/supabase-js"
@@ -12,8 +10,18 @@ import { redirect } from "next/navigation";
 import { CreateQrCodeButton } from "@/components/dashboard/qrcodes/buttons"
 
 export default function CreateQrCodes(){
+    const supabase = createClient()
     const [title, setTitle] = useState<string>('')
     const [link, setLink] = useState<string>('')
+    const [userId, setUserId] = useState<string>('')
+    const [mysession, setMySession] = useState<UserResponse>({} as UserResponse)
+    useEffect (() => {
+        supabase.auth.getUser().then((session) => {
+          // do something here with the session like  ex: setState(session)
+          setMySession(session)
+          setUserId(session.data.user?.id as string)
+        });
+      }, [])
     const [qrCode, setQrCode] = useState<string>('')
 
     return (
@@ -33,7 +41,7 @@ export default function CreateQrCodes(){
 
                     </div> */}
                 </div>
-                    <CreateQrCodeButton title={title} link={link} />
+                    <CreateQrCodeButton title={title} link={link} user_id={userId} />
                 {/* <CreateShortLink title={title} original_link={originalLink} custom_url={customUrl} /> */}
                 {/* <div className="px-3 sm:ml-auto flex justify-between gap-10">
                     <Button variant={"secondary"} className="bg-secondary hover:bg-accent text-white border-white" onClick={()=>{

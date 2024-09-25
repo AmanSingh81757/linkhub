@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Copy } from "lucide-react"
 import { deleteShortLink, createShortLink, revalidateGivenPath } from '@/app/lib/short-link';
+import { DeleteQr, UploadQr } from '@/app/lib/qr-code';
 
 
 export function CreateShortLink({title, original_link, custom_url, user_id}: {title: string, original_link: string, custom_url: string, user_id: string}) {
@@ -122,11 +123,31 @@ export function AddQrCode() {
   );
 }
 
-export function CreateQrCodeButton({title, link}: {title: string, link: string}) {
+export function CreateQrCodeButton({title, link, user_id}: {title: string, link: string, user_id: string}) {
     return (
-        <Button variant="default" className="flex items-center w-full">
+          <Button variant="default" className="flex items-center w-full" type="submit" formAction={()=>{
+          UploadQr({title, link, user_id});
+          revalidateGivenPath('/dashboard/qrcodes')
+          redirect('/dashboard/qrcodes')
+        }}>
             <span className="block">Create</span>{' '}
             <PlusIcon className="h-5 md:ml-4 text-secondary" />
         </Button>
     )
+}
+
+export function DeleteQrButton({ id, user_id }: { id: Number, user_id: string }) {
+  "use client"
+  return (
+    <form className='flex' action={()=>{
+
+      DeleteQr(id, user_id);
+      revalidateGivenPath('/dashboard/qrcodes');
+      }}>
+      <Button variant={"destructive"} size={"sm"}>
+        <span className="sr-only">Delete</span>
+        <TrashIcon className="w-5 text-foreground" />
+      </Button>
+    </form>
+  );
 }

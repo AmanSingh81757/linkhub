@@ -1,59 +1,50 @@
-import { getAllShortedLinks } from "@/app/lib/short-link";
 import { createClient } from "@/utils/supabase/server";
-import { DeleteShortLink, ShareShortLink } from "./buttons";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-
+import { getAllQr } from "@/app/lib/qr-code";
+import Link from "next/link";
+import Image from "next/image";
+import { DeleteQrButton } from "./buttons";
 export default async function QrCodes() {
-    const supabase = createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-
-    const links = await getAllShortedLinks(user?.id);
-    return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10 w-full">
-        {
-        links.map((link) => {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const qrs = await getAllQr(user?.id);
+  return (
+    <>
+      {qrs.length === 0 && (
+        <div className="text-center text-lg font-semibold">
+          No QR codes made yet.
+        </div>
+      )}
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10 w-full">
+        {qrs &&
+          qrs.map((qr) => {
             return (
-                <div key={link.id} className="border-2 hover:cursor-pointer border-border bg-card shadow-md shadow-primary gap-5 md:gap-0 text-[#141E46] flex md:p-3 py-2 md:flex-row flex-col items-center rounded-xl">
-                    <div className="flex flex-col px-2 md:px-5 w-full gap-5">
-                        <div className="flex flex-row justify-between">
-                            <h1 className="md:text-3xl text-2xl font-bold font-bodoni-moda text-primary">{link.title}</h1>
-                            <div className="flex flex-row gap-2 px-5">
-                                <ShareShortLink id={link.id} shortened_link={link.shortened_link} />
-                                <DeleteShortLink id={link.id} />
-                            </div>
-                        </div>
-                        <div className="flex flex-col justify-around gap-2 overflow-hidden hover:cursor-text">
-                            <div className="text-foreground">
-                                <h2 className="text-base font-extralight px-2 pt-1 max-w-fit bg-background rounded-t ">Original Link:</h2>
-                                <Label htmlFor="link" className="sr-only">
-                                Original Link
-                                </Label>
-                                <Input
-                                id="link"
-                                defaultValue={link.original_link}
-                                readOnly
-                                className='font-inconsolata rounded text-foreground overflow-hidden font-medium border-t-0 rounded-tl-none'
-                                />
-                            </div>
-                            <div className="text-foreground">
-                                <h2 className="text-base font-extralight px-2 pt-1 max-w-fit bg-background rounded-t">Shortened Link:</h2>
-                                <Label htmlFor="link" className="sr-only">
-                                Shortened Link
-                                </Label>
-                                <Input
-                                id="link"
-                                defaultValue={link.shortened_link}
-                                readOnly
-                                className='font-inconsolata rounded text-foreground overflow-hidden font-medium border-t-0 rounded-tl-none'
-                                />
-                            </div>
-                        </div>
-                    </div>
+              <div
+                key={qr.id}
+                className="border-2 items-center hover:cursor-pointer border-border bg-card shadow-md shadow-primary gap-5 md:gap-0 text-primary flex flex-col p-3 rounded-xl"
+              >
+                <img
+                  src={qr.qr_url}
+                  alt={qr.title}
+                  className="w-1/2 object-cover rounded-md"
+                />
+                <div className="flex flex-row items-center gap-5">
+                  <div className="flex flex-col">
+                    <h2 className="text-lg font-bold mt-2">Title: {qr.title}</h2>
+                    <h2 className="text-lg font-semibold mt-2">
+                      Original Link:{" "}
+                      <Link className="underline" href={qr.link_url}>
+                        {qr.link_url}
+                      </Link>
+                    </h2>
+                  </div>
+                  <DeleteQrButton id={qr.id} user_id={user?.id as string}/>
                 </div>
-            )
-        })
-        }
-    </div>
+              </div>
+            );
+          })}
+      </div>
+    </>
   );
 }
